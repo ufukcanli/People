@@ -33,19 +33,19 @@ final class ListPresenter {
         view?.beginRefreshing()
         DataSource.fetch(next: nextPage) { [weak self] response, error in
             if let _ = error {
-                self?.people = []
-                self?.displayWarning()
+                self?.setWarning()
                 return
             }
             guard let response else {
-                self?.displayWarning()
+                self?.setWarning()
                 return
             }
             self?.setData(response)
         }
     }
     
-    private func displayWarning() {
+    private func setWarning() {
+        people = []
         view?.endRefreshing()
         view?.reloadTableView()
     }
