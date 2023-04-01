@@ -10,6 +10,7 @@ import Foundation
 protocol ListPresenterInterface {
     func viewDidLoad()
     func didPullDown()
+    func didTapRefresh()
 }
 
 final class ListPresenter {
@@ -22,6 +23,8 @@ final class ListPresenter {
     
     private var timer: Timer?
     private var counter = 0
+    
+    private(set) var isRefreshHidden = true
             
     var numberOfRowsInSection: Int {
         people.count
@@ -36,19 +39,24 @@ final class ListPresenter {
     }
     
     private func fetchData() {
-        view.beginRefreshing()
         DataSource.fetch(next: nextPage) { [weak self] response, error in
             if let error = error {
+                self?.isRefreshHidden = false
                 self?.retryRequest()
                 dump(error)
                 return
             }
             
             if let response, !response.people.isEmpty {
+                self?.isRefreshHidden = true
                 self?.populate(people: response.people)
                 self?.nextPage = response.next
             } else {
-                self?.retryRequest()
+                self?.isRefreshHidden = false
+                self?.view.shouldStopLoading()
+                let message = self?.emptyStateMessage
+                self?.view.showEmptyState(with: message!)
+                self?.view.endRefreshing()
             }
         }
     }
@@ -56,6 +64,7 @@ final class ListPresenter {
     private func populate(people newPeople: [Person]) {
         people.insert(contentsOf: newPeople, at: 0)
         people = people.removeDuplicate(people)
+        isRefreshHidden = true
         view.hideEmptyState()
         view.reloadTableView()
         view.endRefreshing()
@@ -64,12 +73,15 @@ final class ListPresenter {
     }
     
     private func retryRequest() {
+        isRefreshHidden = false
         counter += 1
         
         guard counter < 2 else {
+            isRefreshHidden = true
             timer?.invalidate()
             view.endRefreshing()
             view.showEmptyState(with: emptyStateMessage)
+            view.shouldStopLoading()
             counter = 0
             return
         }
@@ -79,16 +91,24 @@ final class ListPresenter {
             repeats: false
         ) { [weak self] timer in
             self?.fetchData()
+            self?.isRefreshHidden = false
         }
     }
 }
 
 extension ListPresenter: ListPresenterInterface {
     func viewDidLoad() {
+        view.beginRefreshing()
         fetchData()
     }
     
     func didPullDown() {
+        view.beginRefreshing()
+        fetchData()
+    }
+    
+    func didTapRefresh() {
+        view.shouldStartLoading()
         fetchData()
     }
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D20DE23F29D80ED300937302 /* UIButton+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20DE23E29D80ED300937302 /* UIButton+Ext.swift */; };
+		D20DE24129D8152300937302 /* UIActivityIndicatorView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20DE24029D8152300937302 /* UIActivityIndicatorView+Ext.swift */; };
 		D2F0FE7229D7E9A20023F86F /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F0FE7129D7E9A20023F86F /* UIView+Ext.swift */; };
 		D2F0FE7429D7EA290023F86F /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F0FE7329D7EA290023F86F /* UILabel+Ext.swift */; };
 		D2F0FE7A29D800DD0023F86F /* Person+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F0FE7929D800DD0023F86F /* Person+Ext.swift */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D20DE23E29D80ED300937302 /* UIButton+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Ext.swift"; sourceTree = "<group>"; };
+		D20DE24029D8152300937302 /* UIActivityIndicatorView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView+Ext.swift"; sourceTree = "<group>"; };
 		D2F0FE7129D7E9A20023F86F /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		D2F0FE7329D7EA290023F86F /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 		D2F0FE7929D800DD0023F86F /* Person+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+Ext.swift"; sourceTree = "<group>"; };
@@ -67,6 +71,8 @@
 				D2F205AD29D7107A0024ADF1 /* ListViewController.swift */,
 				D2F205AF29D71ADF0024ADF1 /* ListPresenter.swift */,
 				D2F205AB29D70F9C0024ADF1 /* DataSource.swift */,
+				D20DE24029D8152300937302 /* UIActivityIndicatorView+Ext.swift */,
+				D20DE23E29D80ED300937302 /* UIButton+Ext.swift */,
 				D2F0FE7129D7E9A20023F86F /* UIView+Ext.swift */,
 				D2F0FE7329D7EA290023F86F /* UILabel+Ext.swift */,
 				D2F0FE7929D800DD0023F86F /* Person+Ext.swift */,
@@ -147,6 +153,8 @@
 			files = (
 				D2F205B029D71ADF0024ADF1 /* ListPresenter.swift in Sources */,
 				D2F205AC29D70F9C0024ADF1 /* DataSource.swift in Sources */,
+				D20DE23F29D80ED300937302 /* UIButton+Ext.swift in Sources */,
+				D20DE24129D8152300937302 /* UIActivityIndicatorView+Ext.swift in Sources */,
 				D2F0FE7229D7E9A20023F86F /* UIView+Ext.swift in Sources */,
 				D2F2059829D70C8A0024ADF1 /* AppDelegate.swift in Sources */,
 				D2F205AE29D7107A0024ADF1 /* ListViewController.swift in Sources */,

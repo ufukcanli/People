@@ -13,6 +13,8 @@ protocol ListViewInterface: AnyObject {
     func endRefreshing()
     func showEmptyState(with message: String)
     func hideEmptyState()
+    func shouldStartLoading()
+    func shouldStopLoading()
 }
 
 final class ListViewController: UIViewController {
@@ -20,7 +22,8 @@ final class ListViewController: UIViewController {
     
     private var emptyStateView: UIView = .emptyStateView
     private var emptyStateLabel: UILabel = .emptyStateLabel
-    
+    private var emptyStateButton: UIButton = .emptyStateButton
+    private var loadingView: UIActivityIndicatorView = .loadingView
     private var tableView = UITableView(frame: .zero, style: .insetGrouped)
     private var refreshControl = UIRefreshControl()
     
@@ -50,6 +53,10 @@ final class ListViewController: UIViewController {
     @objc private func didPullDown() {
         presenter.didPullDown()
     }
+    
+    @objc private func didTapRefresh() {
+        presenter.didTapRefresh()
+    }
 }
 
 extension ListViewController: ListViewInterface {
@@ -66,10 +73,12 @@ extension ListViewController: ListViewInterface {
     }
     
     func showEmptyState(with message: String) {
+        let isButtonHidden = !presenter.isRefreshHidden
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.emptyStateView.isHidden = false
             self?.emptyStateView.alpha = 1
             self?.emptyStateLabel.text = message
+            self?.emptyStateButton.isHidden = isButtonHidden
         }
     }
     
@@ -78,6 +87,16 @@ extension ListViewController: ListViewInterface {
             self?.emptyStateView.isHidden = true
             self?.emptyStateView.alpha = 0
         }
+    }
+    
+    func shouldStartLoading() {
+        loadingView.isHidden = !presenter.isRefreshHidden
+        loadingView.startAnimating()
+    }
+    
+    func shouldStopLoading() {
+        loadingView.isHidden = !presenter.isRefreshHidden
+        loadingView.stopAnimating()
     }
 }
 
@@ -114,16 +133,28 @@ private extension ListViewController {
     
     func configureEmptyStateView() {
         view.addSubview(emptyStateView)
+        
+        emptyStateView.addSubview(loadingView)
         emptyStateView.addSubview(emptyStateLabel)
+        emptyStateButton.addTarget(self, action: #selector(didTapRefresh), for: .touchUpInside)
+        emptyStateView.addSubview(emptyStateButton)
         
         NSLayoutConstraint.activate([
             emptyStateView.widthAnchor.constraint(equalToConstant: 300),
-            emptyStateView.heightAnchor.constraint(equalToConstant: 150),
+            emptyStateView.heightAnchor.constraint(equalToConstant: 200),
             emptyStateView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             emptyStateView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
+            loadingView.heightAnchor.constraint(equalToConstant: 50),
+            loadingView.widthAnchor.constraint(equalToConstant: 50),
+            loadingView.centerXAnchor.constraint(equalTo: emptyStateView.centerXAnchor),
+            loadingView.bottomAnchor.constraint(equalTo: emptyStateLabel.topAnchor, constant: 5),
+            
             emptyStateLabel.centerXAnchor.constraint(equalTo: emptyStateView.centerXAnchor),
-            emptyStateLabel.centerYAnchor.constraint(equalTo: emptyStateView.centerYAnchor)
+            emptyStateLabel.centerYAnchor.constraint(equalTo: emptyStateView.centerYAnchor, constant: -5),
+            
+            emptyStateButton.topAnchor.constraint(equalTo: emptyStateLabel.bottomAnchor, constant: 5),
+            emptyStateButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 }
