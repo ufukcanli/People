@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D2F0FE7229D7E9A20023F86F /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F0FE7129D7E9A20023F86F /* UIView+Ext.swift */; };
+		D2F0FE7429D7EA290023F86F /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F0FE7329D7EA290023F86F /* UILabel+Ext.swift */; };
+		D2F0FE7A29D800DD0023F86F /* Person+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F0FE7929D800DD0023F86F /* Person+Ext.swift */; };
 		D2F2059829D70C8A0024ADF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F2059729D70C8A0024ADF1 /* AppDelegate.swift */; };
 		D2F2059A29D70C8A0024ADF1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F2059929D70C8A0024ADF1 /* SceneDelegate.swift */; };
 		D2F205A129D70C8C0024ADF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D2F205A029D70C8C0024ADF1 /* Assets.xcassets */; };
@@ -16,6 +19,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D2F0FE7129D7E9A20023F86F /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		D2F0FE7329D7EA290023F86F /* UILabel+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
+		D2F0FE7929D800DD0023F86F /* Person+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+Ext.swift"; sourceTree = "<group>"; };
 		D2F2059429D70C8A0024ADF1 /* People.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = People.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2F2059729D70C8A0024ADF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D2F2059929D70C8A0024ADF1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +67,9 @@
 				D2F205AD29D7107A0024ADF1 /* ListViewController.swift */,
 				D2F205AF29D71ADF0024ADF1 /* ListPresenter.swift */,
 				D2F205AB29D70F9C0024ADF1 /* DataSource.swift */,
+				D2F0FE7129D7E9A20023F86F /* UIView+Ext.swift */,
+				D2F0FE7329D7EA290023F86F /* UILabel+Ext.swift */,
+				D2F0FE7929D800DD0023F86F /* Person+Ext.swift */,
 				D2F205A029D70C8C0024ADF1 /* Assets.xcassets */,
 				D2F205A529D70C8C0024ADF1 /* Info.plist */,
 			);
@@ -138,9 +147,12 @@
 			files = (
 				D2F205B029D71ADF0024ADF1 /* ListPresenter.swift in Sources */,
 				D2F205AC29D70F9C0024ADF1 /* DataSource.swift in Sources */,
+				D2F0FE7229D7E9A20023F86F /* UIView+Ext.swift in Sources */,
 				D2F2059829D70C8A0024ADF1 /* AppDelegate.swift in Sources */,
 				D2F205AE29D7107A0024ADF1 /* ListViewController.swift in Sources */,
 				D2F2059A29D70C8A0024ADF1 /* SceneDelegate.swift in Sources */,
+				D2F0FE7A29D800DD0023F86F /* Person+Ext.swift in Sources */,
+				D2F0FE7429D7EA290023F86F /* UILabel+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

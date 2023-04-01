@@ -10,51 +10,76 @@ import Foundation
 protocol ListPresenterInterface {
     func viewDidLoad()
     func didPullDown()
-    func didTapRetry()
 }
 
 final class ListPresenter {
-    private(set) var people: [Person] = []
-    private(set) var nextPage: String? = nil
+    weak var view: ListViewInterface!
     
-    weak var view: ListViewInterface?
+    private(set) var navigationBarTitle = "People"
     
-    let navigationBarTitle = "People"
+    private var people: [Person] = []
+    private var nextPage: String? = nil
     
+    private var timer: Timer?
+    private var counter = 0
+            
     var numberOfRowsInSection: Int {
         people.count
     }
     
-    func getPerson(at indexPath: IndexPath) -> String {
-        people[indexPath.row].fullName
+    func getPerson(at indexPath: IndexPath) -> Person {
+        people[indexPath.row]
+    }
+    
+    private var emptyStateMessage: String {
+        "🤪 Oops! Please check your \nnetwork connection\n or try again later."
     }
     
     private func fetchData() {
-        view?.beginRefreshing()
+        view.beginRefreshing()
         DataSource.fetch(next: nextPage) { [weak self] response, error in
-            if let _ = error {
-                self?.setWarning()
+            if let error = error {
+                self?.retryRequest()
+                dump(error)
                 return
             }
-            guard let response else {
-                self?.setWarning()
-                return
+            
+            if let response, !response.people.isEmpty {
+                self?.populate(people: response.people)
+                self?.nextPage = response.next
+            } else {
+                self?.retryRequest()
             }
-            self?.setData(response)
         }
     }
     
-    private func setWarning() {
-        people = []
-        view?.endRefreshing()
-        view?.reloadTableView()
+    private func populate(people newPeople: [Person]) {
+        people.insert(contentsOf: newPeople, at: 0)
+        people = people.removeDuplicate(people)
+        view.hideEmptyState()
+        view.reloadTableView()
+        view.endRefreshing()
+        timer?.invalidate()
+        counter = 0
     }
     
-    private func setData(_ response: FetchResponse) {
-        people = response.people
-        nextPage = response.next
-        view?.reloadTableView()
-        view?.endRefreshing()
+    private func retryRequest() {
+        counter += 1
+        
+        guard counter < 2 else {
+            timer?.invalidate()
+            view.endRefreshing()
+            view.showEmptyState(with: emptyStateMessage)
+            counter = 0
+            return
+        }
+        
+        timer = Timer.scheduledTimer(
+            withTimeInterval: 1.0,
+            repeats: false
+        ) { [weak self] timer in
+            self?.fetchData()
+        }
     }
 }
 
@@ -64,10 +89,6 @@ extension ListPresenter: ListPresenterInterface {
     }
     
     func didPullDown() {
-        fetchData()
-    }
-    
-    func didTapRetry() {
         fetchData()
     }
 }

@@ -11,12 +11,19 @@ protocol ListViewInterface: AnyObject {
     func reloadTableView()
     func beginRefreshing()
     func endRefreshing()
+    func showEmptyState(with message: String)
+    func hideEmptyState()
 }
 
 final class ListViewController: UIViewController {
     private let cellID = String(describing: ListViewController.self)
+    
+    private var emptyStateView: UIView = .emptyStateView
+    private var emptyStateLabel: UILabel = .emptyStateLabel
+    
     private var tableView: UITableView!
-    private var refreshControl: UIRefreshControl!
+    private var refreshControl = UIRefreshControl()
+    
     private let presenter: ListPresenter!
     
     init(presenter: ListPresenter! = ListPresenter()) {
@@ -32,7 +39,7 @@ final class ListViewController: UIViewController {
         super.viewDidLoad()
         
         configureTableView()
-        configureRefreshControl()
+        configureEmptyStateView()
         
         presenter.view = self
         presenter.viewDidLoad()
@@ -42,10 +49,6 @@ final class ListViewController: UIViewController {
     
     @objc private func didPullDown() {
         presenter.didPullDown()
-    }
-    
-    @objc private func didTapRetry() {
-        presenter.didTapRetry()
     }
 }
 
@@ -60,6 +63,21 @@ extension ListViewController: ListViewInterface {
     
     func endRefreshing() {
         refreshControl.endRefreshing()
+    }
+    
+    func showEmptyState(with message: String) {
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.emptyStateView.isHidden = false
+            self?.emptyStateView.alpha = 1
+            self?.emptyStateLabel.text = message
+        }
+    }
+    
+    func hideEmptyState() {
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.emptyStateView.isHidden = true
+            self?.emptyStateView.alpha = 0
+        }
     }
 }
 
@@ -82,7 +100,8 @@ extension ListViewController: UITableViewDataSource {
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
-        cell.textLabel?.text = presenter.getPerson(at: indexPath)
+        let person = presenter.getPerson(at: indexPath)
+        cell.textLabel?.text = "\(person.fullName) \(person.id)"
         return cell
     }
 }
@@ -90,25 +109,28 @@ extension ListViewController: UITableViewDataSource {
 private extension ListViewController {
     func configureTableView() {
         tableView = UITableView(frame: .zero, style: .insetGrouped)
-        view.addSubview(tableView)
-        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 52.0
+        view.addSubview(tableView)
+        tableView.frame = view.frame
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+        refreshControl.addTarget(self, action: #selector(didPullDown), for: .valueChanged)
+        tableView.refreshControl = refreshControl
     }
     
-    func configureRefreshControl() {
-        refreshControl = UIRefreshControl()
-        tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(didPullDown), for: .valueChanged)
+    func configureEmptyStateView() {
+        view.addSubview(emptyStateView)
+        emptyStateView.addSubview(emptyStateLabel)
+        
+        NSLayoutConstraint.activate([
+            emptyStateView.widthAnchor.constraint(equalToConstant: 300),
+            emptyStateView.heightAnchor.constraint(equalToConstant: 150),
+            emptyStateView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emptyStateView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            emptyStateLabel.centerXAnchor.constraint(equalTo: emptyStateView.centerXAnchor),
+            emptyStateLabel.centerYAnchor.constraint(equalTo: emptyStateView.centerYAnchor)
+        ])
     }
 }
