@@ -21,7 +21,7 @@ final class ListViewController: UIViewController {
     private var emptyStateView: UIView = .emptyStateView
     private var emptyStateLabel: UILabel = .emptyStateLabel
     
-    private var tableView: UITableView!
+    private var tableView = UITableView(frame: .zero, style: .insetGrouped)
     private var refreshControl = UIRefreshControl()
     
     private let presenter: ListPresenter!
@@ -88,17 +88,11 @@ extension ListViewController: UITableViewDelegate {
 }
 
 extension ListViewController: UITableViewDataSource {
-    func tableView(
-        _ tableView: UITableView,
-        numberOfRowsInSection section: Int
-    ) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         presenter.numberOfRowsInSection
     }
     
-    func tableView(
-        _ tableView: UITableView,
-        cellForRowAt indexPath: IndexPath
-    ) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         let person = presenter.getPerson(at: indexPath)
         cell.textLabel?.text = "\(person.fullName) \(person.id)"
@@ -108,7 +102,6 @@ extension ListViewController: UITableViewDataSource {
 
 private extension ListViewController {
     func configureTableView() {
-        tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = 52.0
