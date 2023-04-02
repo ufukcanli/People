@@ -10,7 +10,7 @@ import UIKit
 extension UIButton {
     static var emptyStateButton: UIButton {
         let button = UIButton(type: .system)
-        button.setTitle("Refresh", for: .normal)
+        button.setTitle("Retry", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }

@@ -54,8 +54,8 @@ final class ListViewController: UIViewController {
         presenter.didPullDown()
     }
     
-    @objc private func didTapRefresh() {
-        presenter.didTapRefresh()
+    @objc private func didTapRetry() {
+        presenter.didTapRetry()
     }
 }
 
@@ -73,13 +73,12 @@ extension ListViewController: ListViewInterface {
     }
     
     func showEmptyState(with message: String) {
-        let isButtonHidden = !presenter.isRefreshHidden
         UIView.animate(withDuration: 0.3) { [weak self] in
             self?.emptyStateView.isHidden = false
-            self?.emptyStateView.alpha = 1
             self?.emptyStateLabel.text = message
-            self?.emptyStateButton.isHidden = isButtonHidden
+            self?.emptyStateView.alpha = 1
         }
+        tableView.isUserInteractionEnabled = false
     }
     
     func hideEmptyState() {
@@ -87,15 +86,14 @@ extension ListViewController: ListViewInterface {
             self?.emptyStateView.isHidden = true
             self?.emptyStateView.alpha = 0
         }
+        tableView.isUserInteractionEnabled = true
     }
     
     func shouldStartLoading() {
-        loadingView.isHidden = !presenter.isRefreshHidden
         loadingView.startAnimating()
     }
     
     func shouldStopLoading() {
-        loadingView.isHidden = !presenter.isRefreshHidden
         loadingView.stopAnimating()
     }
 }
@@ -136,12 +134,12 @@ private extension ListViewController {
         
         emptyStateView.addSubview(loadingView)
         emptyStateView.addSubview(emptyStateLabel)
-        emptyStateButton.addTarget(self, action: #selector(didTapRefresh), for: .touchUpInside)
+        emptyStateButton.addTarget(self, action: #selector(didTapRetry), for: .touchUpInside)
         emptyStateView.addSubview(emptyStateButton)
         
         NSLayoutConstraint.activate([
-            emptyStateView.widthAnchor.constraint(equalToConstant: 300),
-            emptyStateView.heightAnchor.constraint(equalToConstant: 200),
+            emptyStateView.widthAnchor.constraint(equalToConstant: 250),
+            emptyStateView.heightAnchor.constraint(equalToConstant: 150),
             emptyStateView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             emptyStateView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             
