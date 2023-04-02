@@ -330,7 +330,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7995LB4979;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = People/Info.plist;
+				INFOPLIST_FILE = People/Configuration/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -358,7 +358,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7995LB4979;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = People/Info.plist;
+				INFOPLIST_FILE = People/Configuration/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
