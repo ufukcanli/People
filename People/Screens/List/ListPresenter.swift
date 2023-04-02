@@ -21,8 +21,7 @@ final class ListPresenter {
     private var people: [Person] = []
     private var nextPage: String? = nil
     
-    private var timer: Timer?
-    private var counter = 0
+    private var requestCounter = 0
                 
     var numberOfRowsInSection: Int {
         people.count
@@ -62,28 +61,21 @@ final class ListPresenter {
         view.hideEmptyState()
         view.reloadTableView()
         view.endRefreshing()
-        timer?.invalidate()
-        counter = 0
+        requestCounter = 0
     }
     
     private func retryRequest() {
-        counter += 1
+        requestCounter += 1
         
-        guard counter < 2 else {
-            timer?.invalidate()
+        guard requestCounter < 2 else {
             view.endRefreshing()
             view.showEmptyState(with: Message.serverError.rawValue)
             view.shouldStopLoading()
-            counter = 0
+            requestCounter = 0
             return
         }
         
-        timer = Timer.scheduledTimer(
-            withTimeInterval: 1.0,
-            repeats: false
-        ) { [weak self] timer in
-            self?.fetchData()
-        }
+        fetchData()
     }
 }
 
