@@ -47,6 +47,54 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D27745A629D9CC9700E99F21 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				D2F2059729D70C8A0024ADF1 /* AppDelegate.swift */,
+				D2F2059929D70C8A0024ADF1 /* SceneDelegate.swift */,
+				D2F205A029D70C8C0024ADF1 /* Assets.xcassets */,
+				D2F205A529D70C8C0024ADF1 /* Info.plist */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		D27745A729D9CCAD00E99F21 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				D27745A829D9CCB600E99F21 /* List */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		D27745A829D9CCB600E99F21 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				D2F205AF29D71ADF0024ADF1 /* ListPresenter.swift */,
+				D2F205AD29D7107A0024ADF1 /* ListViewController.swift */,
+			);
+			path = List;
+			sourceTree = "<group>";
+		};
+		D27745A929D9CCC500E99F21 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D2F0FE7929D800DD0023F86F /* Person+Ext.swift */,
+				D2F205AB29D70F9C0024ADF1 /* DataSource.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D27745AA29D9CCDA00E99F21 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				D2F0FE7329D7EA290023F86F /* UILabel+Ext.swift */,
+				D2F0FE7129D7E9A20023F86F /* UIView+Ext.swift */,
+				D20DE23E29D80ED300937302 /* UIButton+Ext.swift */,
+				D20DE24029D8152300937302 /* UIActivityIndicatorView+Ext.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		D2F2058B29D70C8A0024ADF1 = {
 			isa = PBXGroup;
 			children = (
@@ -66,18 +114,10 @@
 		D2F2059629D70C8A0024ADF1 /* People */ = {
 			isa = PBXGroup;
 			children = (
-				D2F2059729D70C8A0024ADF1 /* AppDelegate.swift */,
-				D2F2059929D70C8A0024ADF1 /* SceneDelegate.swift */,
-				D2F205AD29D7107A0024ADF1 /* ListViewController.swift */,
-				D2F205AF29D71ADF0024ADF1 /* ListPresenter.swift */,
-				D2F205AB29D70F9C0024ADF1 /* DataSource.swift */,
-				D20DE24029D8152300937302 /* UIActivityIndicatorView+Ext.swift */,
-				D20DE23E29D80ED300937302 /* UIButton+Ext.swift */,
-				D2F0FE7129D7E9A20023F86F /* UIView+Ext.swift */,
-				D2F0FE7329D7EA290023F86F /* UILabel+Ext.swift */,
-				D2F0FE7929D800DD0023F86F /* Person+Ext.swift */,
-				D2F205A029D70C8C0024ADF1 /* Assets.xcassets */,
-				D2F205A529D70C8C0024ADF1 /* Info.plist */,
+				D27745A929D9CCC500E99F21 /* Models */,
+				D27745A729D9CCAD00E99F21 /* Screens */,
+				D27745AA29D9CCDA00E99F21 /* Components */,
+				D27745A629D9CC9700E99F21 /* Configuration */,
 			);
 			path = People;
 			sourceTree = "<group>";
